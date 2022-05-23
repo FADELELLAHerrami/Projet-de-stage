@@ -15,7 +15,54 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import LoginView,LogoutView,PasswordChangeDoneView,PasswordChangeView
+
+#from authentication.views import login_page,logout_user,LoginPage
+from blog.views import home,photo_upload,blog_and_photo_upload,view_blog,edit_blog,create_multiple_photos,follow_users
+import authentication.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('',LoginView.as_view(template_name='authentication/login.html',
+        redirect_authenticated_user=True),name='login'),
+
+    path('logout/',LogoutView.as_view(),name='logout'),
+
+    path('change-password',PasswordChangeView.as_view(
+        template_name='authentication/password_change_form.html',
+    ),name='change_password'),
+
+    path('change-password-done',PasswordChangeDoneView.as_view(
+        template_name='authentication/password_change_done.html',
+    ),name='change-password-done'),
+
+    path('home/',home,name='home'),
+
+    path('signup/',authentication.views.signup_page,name='signup'),
+
+    path('photo/upload/',photo_upload,name='photo_upload'),
+
+    
+    path('blog/create', blog_and_photo_upload, name='blog_create'),
+
+    path('blog/<int:blog_id>',view_blog, name='view_blog'),
+
+    path('blog/<int:blog_id>/edit', edit_blog, name='edit_blog'),
+
+     path('photo/upload-multiple/', create_multiple_photos,
+    name='create_multiple_photos'),
+
+    path('follow-users/', follow_users, name='follow_users')
+
 ]
+
+
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
