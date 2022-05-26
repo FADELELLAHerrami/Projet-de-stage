@@ -30,3 +30,9 @@ class FollowUsersForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['follows']
+
+
+
+
+
+ 

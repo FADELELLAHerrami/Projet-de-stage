@@ -45,13 +45,11 @@ def home(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    
-
     return render(request, 'blog/home.html', context={'page_obj': page_obj})
 
 
 @login_required
-@permission_required(['blog.add_photo', 'blog.add_blog'])
+@permission_required(['blog.add_photo'])
 def blog_and_photo_upload(request):
     blog_form = forms.BlogForm()
     photo_form = forms.PhotoForm()
@@ -139,3 +137,4 @@ def photo_feed(request):
         'photos': photos,
     }
     return render(request, 'blog/photo_feed.html', context=context)
+

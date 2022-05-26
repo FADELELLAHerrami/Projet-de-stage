@@ -13,12 +13,14 @@ def create_groups(apps, schema_migration):
     change_photo = Permission.objects.get(codename='change_photo')
     delete_photo = Permission.objects.get(codename='delete_photo')
     view_photo = Permission.objects.get(codename='view_photo')
+    edit_blog = Permission.objects.get(codename='edit_blog')
     
     creator_permissions = [
         add_photo,
         change_photo,
         delete_photo,
         view_photo,
+        edit_blog,
     ]
     
     creators = Group(name='creators')
@@ -47,3 +49,10 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(create_groups)
     ]
+
+
+
+
+
+
+
